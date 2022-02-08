@@ -12,6 +12,11 @@ class de:
         self.samples = []           
         self.mu = mu                # Mutation factor
         self.xi = xi                # Crossover rate
+        
+        self.data_fidelity = []
+        self.data_pulses = [[]]
+        self.op_fidelity = 0
+        self.op_pulse = []
 
     def sample_init(self):
         # Initaillize random samples for optimization
@@ -31,21 +36,17 @@ class de:
     def start(self, itr = 10000):
         # itr: iteration times
         self.sample_init()
-        Data_Fidelity = []
-        Data_Pulses = [[]]
-        Op_Fidelity = 0
-        Op_Pulse = []
 
         for i in range(itr):
             print('# %s.' %i)
-            print("Optimized Fidelity: %s" %Op_Fidelity)
+            print("Optimized Fidelity: %s" %self.op_fidelity)
             # 1) Mutation
-            di = self.sample(4)   # Sampled population member
-            Di = self.samples[di[0]]            # Original vector
+            di = self.sample(4)             # Sampled population member
+            Di = self.samples[di[0]]        # Original vector
             Di1 = self.samples[di[1]]
             Di2 = self.samples[di[2]]
             Di3 = self.samples[di[3]]
-            Mi = Di1 + self.mu*(Di2 - Di3)      # Trail vector
+            Mi = Di1 + self.mu*(Di2 - Di3)  # Trail vector
 
             # 2) Corssover
             Ci = []     # Target vector
@@ -63,13 +64,13 @@ class de:
             if fci > fdi:
                 self.samples[di[0]] = Ci
                 print("Replace vector %s" %(di[0]))
-                Data_Fidelity.append(fci)
-                Data_Pulses.append(Ci)
+                self.data_fidelity.append(fci)
+                self.data_pulses.append(Ci)
             else:
                 print("Vector %s unchanged" %(di[0]))
-                Data_Fidelity.append(fdi)
-                Data_Pulses.append(Di)
+                self.data_fidelity.append(fdi)
+                self.data_pulses.append(Di)
             
-            if Data_Fidelity[-1] > Op_Fidelity:
-                Op_Fidelity = Data_Fidelity[-1]
-                Op_Pulse = Data_Pulses[-1]
+            if self.data_fidelity[-1] > self.op_fidelity:
+                self.op_fidelity = self.data_fidelity[-1]
+                self.op_pulse = self.data_pulses[-1]
