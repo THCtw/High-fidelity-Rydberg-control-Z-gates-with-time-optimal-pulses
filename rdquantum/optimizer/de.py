@@ -1,6 +1,6 @@
 from multiprocessing.connection import wait
 from IPython.display import clear_output
-from fidelity import fidelity
+from rdquantum.fidelity import fidelity
 import numpy as np
 
 from qutip import *
