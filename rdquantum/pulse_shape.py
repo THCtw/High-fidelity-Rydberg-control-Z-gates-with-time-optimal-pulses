@@ -1,7 +1,7 @@
 import math
 import numpy as np
 
-def Saffman_shape(t, T_gate, num_seg, pulse_coe, phase_coe=None):
+def Saffman_shape(t, T_gate, num_seg, pulse_coe, phase_coe=None, conjugate=False):
     dt = T_gate/num_seg     # Duration of each segment
     ith = int( (t - dt/2) // dt )
     ti = dt/2 + dt*ith
@@ -43,5 +43,8 @@ def Saffman_shape(t, T_gate, num_seg, pulse_coe, phase_coe=None):
             pi1 = phase_coe[num_seg-ith1-1]
             pt = ( (pi + pi1)/2 + ( (pi1-pi)/2 ) * math.erf( (5/dt) * ( t - (ti + ti1)/2 ) ) )
             ft = np.exp(1j*pt) * ( (fi + fi1)/2 + ( (fi1-fi)/2 ) * math.erf( (5/dt) * ( t - (ti + ti1)/2 ) ) )
+
+    if conjugate == True:
+        ft = np.conjugate(ft)
 
     return ft
