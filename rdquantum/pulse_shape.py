@@ -48,3 +48,21 @@ def Saffman_shape(t, T_gate, num_seg, pulse_coe, phase_coe=None, conjugate=False
         ft = np.conjugate(ft)
 
     return ft
+
+
+def MS_pulse_shape(times, Tg, beta_series, n):
+    n=n[0]//1
+    # defined Berstein polynomial basis
+    def bvn(x,n,v):  
+        cvn=math.factorial(n)/math.factorial(v)/math.factorial(n-v)
+        f=cvn*(x**v)*((1-x)**(n-v))
+        return f
+
+
+# create Omega1 pulse
+
+    Omega1_t=beta_series[0]*(bvn(times/Tg,n,1)+bvn(times/Tg,n,n-1))\
+            +beta_series[1]*(bvn(times/Tg,n,2)+bvn(times/Tg,n,n-2))\
+            +beta_series[2]*(bvn(times/Tg,n,3)+bvn(times/Tg,n,n-3))\
+            +beta_series[3]*(bvn(times/Tg,n,4)+bvn(times/Tg,n,n-4))
+    return Omega1_t
