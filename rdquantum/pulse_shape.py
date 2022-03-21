@@ -57,10 +57,8 @@ def MS_pulse_shape(times, Tg, beta_series, n):
         cvn=math.factorial(n)/math.factorial(v)/math.factorial(n-v)
         f=cvn*(x**v)*((1-x)**(n-v))
         return f
-
-
+    
 # create Omega1 pulse
-
     Omega1_t=beta_series[0]*(bvn(times/Tg,n,1)+bvn(times/Tg,n,n-1))\
             +beta_series[1]*(bvn(times/Tg,n,2)+bvn(times/Tg,n,n-2))\
             +beta_series[2]*(bvn(times/Tg,n,3)+bvn(times/Tg,n,n-3))\
