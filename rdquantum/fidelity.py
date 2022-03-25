@@ -6,8 +6,8 @@ class fidelity:
     def __init__(self, GateOp):
         self.GateOp = GateOp
 
-    def get_fidelity(self, Pulses, Phases, rho_init, rho_targets):
-        results = self.GateOp(Pulses, Phases, rho_init, rho_targets)
+    def get_fidelity(self, Pulses, rho_init, rho_targets):
+        results = self.GateOp(Pulses, rho_init, rho_targets)
         bell1 = results.expect[0][-1]
         bell2 = results.expect[1][-1]
         bell3 = results.expect[2][-1]
